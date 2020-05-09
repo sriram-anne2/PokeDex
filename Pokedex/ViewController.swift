@@ -8,15 +8,15 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class ViewController: UITableViewController, UISearchBarDelegate {
+    
+    @IBOutlet var searchBar: UISearchBar!
     
     var pokemon: [Pokemon] = []
-    
-    func capitalize(text: String) -> String {
-        return text.prefix(1).uppercased() + text.dropFirst()
-    }
-    
+        
     override func viewDidLoad() {
+        
+        searchBar.delegate = self
         
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit-151")
         
@@ -45,6 +45,9 @@ class ViewController: UITableViewController {
         }.resume()
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // implememnt search functionality here
+    }
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
@@ -63,6 +66,11 @@ class ViewController: UITableViewController {
         
         return cell
     }
+    
+    func capitalize(text: String) -> String {
+        return text.prefix(1).uppercased() + text.dropFirst()
+    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "pokemonSegue" {
